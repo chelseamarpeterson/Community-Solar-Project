@@ -16,15 +16,15 @@ df.2024 = df[which(df$Year == 2024),]
 months = df.2024$Month
 
 # plot energy use by source
-df.simple.2024 = df.2024[,c(2,7,8)]
+df.simple.2024 = df.2024[,c("Month","Community solar generation (kWh)","Energy from utility (kWh)")]
 colnames(df.simple.2024) = c("Month","Community solar","Utility")
 df.source.melt = melt(df.simple.2024,id.vars=c("Month"))
 ggplot(df.source.melt, aes(x=factor(Month, levels=months), 
                            y=value, 
                            color=variable,
                            group=variable)) + 
-       geom_point() + geom_line() + 
+       geom_point() + geom_line() + ylim(0,1200) +
        scale_color_manual(values=c("Community solar"="darkgoldenrod1",
                                    "Utility"="darkslategray")) +
-       labs(x="",y="Energy use (kWh)",color="Energy source",
+       labs(x="",y="Energy use (kWh)",color="Energy type",
             title="Energy by source in 2024")
